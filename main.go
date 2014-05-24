@@ -6,6 +6,7 @@ import (
 	"flag"
 	"strconv"
 	"fmt"
+	"runtime"
 )
 
 func main() {
@@ -22,6 +23,8 @@ func main() {
 		fmt.Println("Please Provide Valid maximum number to convert to")
 		return
 	}
+
+	runtime.GOMAXPROCS(1)
 
 	pool := pool.NewPool(numCPUS)
 
