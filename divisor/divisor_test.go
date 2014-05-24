@@ -1,7 +1,7 @@
 package divisor_test
 
 import (
-	"primes/divisor"
+	"github.com/matthewmcnew/primes/divisor"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
