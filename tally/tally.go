@@ -14,24 +14,24 @@ func NewTallyManager() *TallyManager {
 	return &TallyManager{Counts: counts}
 }
 
-func (t* TallyManager) NewValue(value int) {
+func (t *TallyManager) NewValue(value int) {
 	t.Lock()
 	defer t.Unlock()
 	t.Counts[value] = t.Counts[value] + 1
 }
 
-func (t* TallyManager) MostCommon() (mostCommon, count int) {
+func (t *TallyManager) MostCommon() (mostCommon, maximum int) {
 	t.Lock()
 	defer t.Unlock()
 
-	count = 0
 	mostCommon = 0
+	maximum = 0
 	for key, value := range t.Counts {
-		if(value > key) {
-			count = value
+		if value > maximum {
+			maximum = value
 			mostCommon = key
 		}
 	}
+
 	return
 }
-

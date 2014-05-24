@@ -15,6 +15,7 @@ var _ = Describe("Divisor", func() {
 			Expect(divisor.HigestPrime(11)).To(Equal(11))
 			Expect(divisor.HigestPrime(30)).To(Equal(5))
 			Expect(divisor.HigestPrime(32)).To(Equal(2))
+			Expect(divisor.HigestPrime(2)).To(Equal(2))
 		})
 	})
 })
