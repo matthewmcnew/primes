@@ -10,3 +10,8 @@
 
  ginkgo
 
+## Run the tests
+
+ go get github.com/onsi/ginkgo/ginkgo
+
+ go get github.com/onsi/gomega
