@@ -60,4 +60,17 @@ var _ = Describe("Tally", func() {
 					})
 
 			})
+
+		Describe("Close", func(){
+			It("Closes the Input Chan", func() {
+				tallyManager := tally.NewTallyManager(1)
+
+				go tallyManager.Run()
+
+				tallyManager.Close()
+
+				Eventually(func() chan *models.ChangeEvent {return tallyManager.Events }).Should(BeClosed())
+				Expect(func(){ tallyManager.NewValue(&models.CalculatedResult{Prime: 5, Job: 124}) }).To(Panic())
+			})
+		})
 	})

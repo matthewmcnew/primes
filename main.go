@@ -27,11 +27,9 @@ func main() {
 	runtime.GOMAXPROCS(numCPUS)
 
 	pool := pool.NewPool(numCPUS)
-	go func(){
-		for event := range pool.EventChannel() {
-			fmt.Printf("Now %d is the most Common Starting at %d.\n", event.Prime, event.Job)
-		}
-	}()
-
 	pool.Run(maximumNumberToComputeTo)
+
+	for event := range pool.EventChannel() {
+		fmt.Printf("Now %d is the most Common Starting at %d.\n", event.Prime, event.Job)
+	}
 }

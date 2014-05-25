@@ -10,12 +10,12 @@ import (
 
 var _ = Describe("Pool", func() {
 	Describe("MaxValue", func() {
-		It("should find the most common prime divisor", func() {
+		FIt("should find the most common prime divisor", func() {
 			pool := pool.NewPool(1)
 
 			eventChan := pool.EventChannel()
 
-			go pool.Run(200)
+			pool.Run(200)
 
 			event1 := <- eventChan
 			Expect(event1).To(Equal(&models.ChangeEvent{Prime: 2, Job: 2}))
@@ -28,6 +28,8 @@ var _ = Describe("Pool", func() {
 
 			event4 := <- eventChan
 			Expect(event4).To(Equal(&models.ChangeEvent{Prime: 7, Job: 196}))
+
+			Eventually(func() chan *models.ChangeEvent {return eventChan}).Should(BeClosed())
 		})
 	})
 })

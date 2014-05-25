@@ -32,11 +32,14 @@ func (t *TallyManager) NewValue(calculatedResult *models.CalculatedResult) {
 }
 
 func (t *TallyManager) Run() {
-	var calculatedResult *models.CalculatedResult
-	for {
-		calculatedResult = <- t.inputChan
+	for calculatedResult := range t.inputChan {
 		t.ensureOrder(calculatedResult)
 	}
+	close(t.Events)
+}
+
+func (t *TallyManager) Close() {
+	close(t.inputChan)
 }
 
 func (t *TallyManager) ensureOrder(calculatedResult *models.CalculatedResult) {

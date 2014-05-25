@@ -33,6 +33,7 @@ func (p *Pool) Run(x int) {
 	job.RunJob(x)
 
 	job.Wait()
+	p.tallyManager.Close()
 }
 
 type job struct {
