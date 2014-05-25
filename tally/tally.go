@@ -1,19 +1,18 @@
 package tally
 
 import (
+	"container/heap"
 	"github.com/matthewmcnew/primes/models"
 	"github.com/matthewmcnew/primes/queue"
-	"container/heap"
-
 )
 
 type TallyManager struct {
-	Counts map[int]int
-	Events       chan *models.ChangeEvent
-	inputChan    chan *models.CalculatedResult
+	Counts          map[int]int
+	Events          chan *models.ChangeEvent
+	inputChan       chan *models.CalculatedResult
 	mostCommonValue int
-	queue *queue.Queue
-	next int
+	queue           *queue.Queue
+	next            int
 }
 
 func NewTallyManager(staringPoint int) *TallyManager {
@@ -45,7 +44,7 @@ func (t *TallyManager) Close() {
 func (t *TallyManager) ensureOrder(calculatedResult *models.CalculatedResult) {
 	if calculatedResult.Job != t.next {
 		heap.Push(t.queue, calculatedResult)
-	}else {
+	} else {
 		t.next += 1
 		t.tallyResult(calculatedResult)
 		if t.queue.Len() > 0 && t.queue.LowestJob() == t.next {

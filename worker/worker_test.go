@@ -1,8 +1,8 @@
 package worker_test
 
 import (
-	"github.com/matthewmcnew/primes/worker"
 	"github.com/matthewmcnew/primes/models"
+	"github.com/matthewmcnew/primes/worker"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

@@ -1,9 +1,9 @@
 package queue_test
 
 import (
-	. "github.com/matthewmcnew/primes/queue"
 	"container/heap"
 	"github.com/matthewmcnew/primes/models"
+	. "github.com/matthewmcnew/primes/queue"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -45,21 +45,21 @@ var _ = Describe("Queue", func() {
 	})
 
 	Describe("Len", func() {
-			It("Returns the Length of the queue", func() {
-					queue := &Queue{}
-					heap.Init(queue)
+		It("Returns the Length of the queue", func() {
+			queue := &Queue{}
+			heap.Init(queue)
 
-					Expect(queue.Len()).To(Equal(0))
+			Expect(queue.Len()).To(Equal(0))
 
-					item := &models.CalculatedResult{Prime: 1, Job: 1}
-					heap.Push(queue, item)
+			item := &models.CalculatedResult{Prime: 1, Job: 1}
+			heap.Push(queue, item)
 
-					Expect(queue.Len()).To(Equal(1))
+			Expect(queue.Len()).To(Equal(1))
 
-					Otheritem := &models.CalculatedResult{Prime: 1, Job: 5}
-					heap.Push(queue, Otheritem)
+			Otheritem := &models.CalculatedResult{Prime: 1, Job: 5}
+			heap.Push(queue, Otheritem)
 
-					Expect(queue.Len()).To(Equal(2))
-				})
+			Expect(queue.Len()).To(Equal(2))
 		})
+	})
 })

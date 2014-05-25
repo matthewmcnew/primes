@@ -1,6 +1,6 @@
 package models
 
-type CalculatedResult struct{
+type CalculatedResult struct {
 	Prime int
-	Job int
+	Job   int
 }

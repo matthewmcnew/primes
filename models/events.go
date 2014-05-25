@@ -1,8 +1,8 @@
 package models
 
-type ChangeEvent struct{
+type ChangeEvent struct {
 	Prime int
-	Job int
+	Job   int
 }
 
 //type ChangeEvent struct{

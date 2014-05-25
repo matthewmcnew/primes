@@ -1,15 +1,15 @@
 package pool
 
 import (
+	"github.com/matthewmcnew/primes/models"
 	"github.com/matthewmcnew/primes/tally"
 	"github.com/matthewmcnew/primes/worker"
-	"github.com/matthewmcnew/primes/models"
 
 	"sync"
 )
 
 type Pool struct {
-	cpus int
+	cpus         int
 	tallyManager *tally.TallyManager
 }
 

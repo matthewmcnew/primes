@@ -4,9 +4,9 @@ import (
 	"github.com/matthewmcnew/primes/pool"
 
 	"flag"
-	"strconv"
 	"fmt"
 	"runtime"
+	"strconv"
 )
 
 func main() {
