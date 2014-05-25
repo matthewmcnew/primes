@@ -10,7 +10,7 @@ import (
 
 var _ = Describe("Pool", func() {
 	Describe("MaxValue", func() {
-		FIt("should find the most common prime divisor", func() {
+		It("should find the most common prime divisor", func() {
 			pool := pool.NewPool(1)
 
 			eventChan := pool.EventChannel()
