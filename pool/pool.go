@@ -3,31 +3,36 @@ package pool
 import (
 	"github.com/matthewmcnew/primes/tally"
 	"github.com/matthewmcnew/primes/worker"
+	"github.com/matthewmcnew/primes/models"
 
 	"sync"
 )
 
 type Pool struct {
 	cpus int
+	tallyManager *tally.TallyManager
 }
 
 func NewPool(numCPUs int) *Pool {
-	return &Pool{cpus: numCPUs}
+	tallyManager := tally.NewTallyManager(2)
+	return &Pool{cpus: numCPUs, tallyManager: tallyManager}
 }
 
-func (p *Pool) Run(x int) int {
-	inputChan := make(chan int, p.cpus)
-	tallyManager := tally.NewTallyManager()
+func (p *Pool) EventChannel() chan *models.CalculatedResult {
+	return p.tallyManager.Events
+}
 
-	job := &job{pool: p, inputChan: inputChan, tallyManager: tallyManager}
+func (p *Pool) Run(x int) {
+	go p.tallyManager.Run()
+
+	inputChan := make(chan int, p.cpus)
+
+	job := &job{pool: p, inputChan: inputChan}
 	job.Add(p.cpus)
 
 	job.RunJob(x)
 
 	job.Wait()
-
-	mostCommon, _ := job.tallyManager.MostCommon()
-	return mostCommon
 }
 
 type job struct {
@@ -47,7 +52,7 @@ func (j *job) RunJob(x int) {
 
 	for i := 1; i <= j.pool.cpus; i++ {
 		go func() {
-			worker.Work(j.inputChan, j.tallyManager)
+			worker.Work(j.inputChan, j.pool.tallyManager)
 			j.Done()
 		}()
 	}

@@ -2,6 +2,7 @@ package pool_test
 
 import (
 	"github.com/matthewmcnew/primes/pool"
+	"github.com/matthewmcnew/primes/models"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -12,10 +13,21 @@ var _ = Describe("Pool", func() {
 		It("should find the most common prime divisor", func() {
 			pool := pool.NewPool(1)
 
-			Expect(pool.Run(2)).To(Equal(2))
-			Expect(pool.Run(12)).To(Equal(3))
-			Expect(pool.Run(80)).To(Equal(5))
-			Expect(pool.Run(196)).To(Equal(7))
+			eventChan := pool.EventChannel()
+
+			go pool.Run(200)
+
+			event1 := <- eventChan
+			Expect(event1).To(Equal(&models.CalculatedResult{Prime: 2, Job: 2}))
+
+			event2 := <- eventChan
+			Expect(event2).To(Equal(&models.CalculatedResult{Prime: 3, Job: 12}))
+
+			event3 := <- eventChan
+			Expect(event3).To(Equal(&models.CalculatedResult{Prime: 5, Job: 80}))
+
+			event4 := <- eventChan
+			Expect(event4).To(Equal(&models.CalculatedResult{Prime: 7, Job: 196}))
 		})
 	})
 })
