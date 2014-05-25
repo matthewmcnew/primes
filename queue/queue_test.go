@@ -28,7 +28,7 @@ var _ = Describe("Queue", func() {
 	})
 
 	Describe("LowestJob", func() {
-		It("Returns the next wihtout returning", func() {
+		It("Returns the next without returning", func() {
 			queue := &Queue{}
 			heap.Init(queue)
 

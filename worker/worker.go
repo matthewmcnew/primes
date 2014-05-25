@@ -11,12 +11,8 @@ type tallyManagerInterface interface {
 
 func Work(inputChan chan int, tallyManager tallyManagerInterface) {
 	var highestPrime int
-	for {
-		job, ok := <-inputChan
-		if !ok {
-			return
-		}
 
+	for job := range inputChan {
 		highestPrime = divisor.HigestPrime(job)
 		tallyManager.NewValue(&models.CalculatedResult{Prime: highestPrime, Job: job})
 	}

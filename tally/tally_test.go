@@ -58,7 +58,6 @@ var _ = Describe("Tally", func() {
 				Expect(event).To(Equal(&models.ChangeEvent{Prime: 2, Job: 102}))
 			})
 		})
-
 	})
 
 	Describe("Close", func() {
