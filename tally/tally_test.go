@@ -12,7 +12,7 @@ var _ = Describe("Tally", func() {
 
 		Describe("MostCommon", func() {
 				Context("In Order", func() {
-					It("Informs when a new Most Common item is reached", func() {
+					It("Fires events when a new Most Common item is reached", func() {
 							tallyManager := tally.NewTallyManager(1)
 
 							go tallyManager.Run()
@@ -21,7 +21,7 @@ var _ = Describe("Tally", func() {
 							tallyManager.NewValue(first)
 
 							event := <-tallyManager.Events
-							Expect(event).To(Equal(first))
+							Expect(event).To(Equal(&models.ChangeEvent{Prime: 1, Job: 1}))
 
 							tallyManager.NewValue(&models.CalculatedResult{Prime: 1, Job: 2})
 							tallyManager.NewValue(&models.CalculatedResult{Prime: 5, Job: 3})
@@ -31,12 +31,12 @@ var _ = Describe("Tally", func() {
 							tallyManager.NewValue(leadTaker)
 
 							event = <-tallyManager.Events
-							Expect(event).To(Equal(leadTaker))
+							Expect(event).To(Equal(&models.ChangeEvent{Prime: 5, Job: 5}))
 						})
 					})
 
 				Context("Out of Order", func() {
-						It("Informs when a new Most Common item is reached", func() {
+						It("Fires events when a new Most Common item is reached", func() {
 								tallyManager := tally.NewTallyManager(100)
 
 								go tallyManager.Run()
@@ -45,7 +45,7 @@ var _ = Describe("Tally", func() {
 								tallyManager.NewValue(first)
 
 								event := <-tallyManager.Events
-								Expect(event).To(Equal(first))
+								Expect(event).To(Equal(&models.ChangeEvent{Prime: 1, Job: 100}))
 
 								tallyManager.NewValue(&models.CalculatedResult{Prime: 5, Job: 124})
 
@@ -55,8 +55,7 @@ var _ = Describe("Tally", func() {
 								tallyManager.NewValue(&models.CalculatedResult{Prime: 2, Job: 101})
 
 								event = <-tallyManager.Events
-								Expect(event).To(Equal(leadTaker))
-
+								Expect(event).To(Equal(&models.ChangeEvent{Prime: 2, Job: 102}))
 							})
 					})
 

@@ -18,7 +18,7 @@ func NewPool(numCPUs int) *Pool {
 	return &Pool{cpus: numCPUs, tallyManager: tallyManager}
 }
 
-func (p *Pool) EventChannel() chan *models.CalculatedResult {
+func (p *Pool) EventChannel() chan *models.ChangeEvent {
 	return p.tallyManager.Events
 }
 

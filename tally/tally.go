@@ -9,7 +9,7 @@ import (
 
 type TallyManager struct {
 	Counts map[int]int
-	Events       chan *models.CalculatedResult
+	Events       chan *models.ChangeEvent
 	inputChan    chan *models.CalculatedResult
 	mostCommonValue int
 	queue *queue.Queue
@@ -18,7 +18,7 @@ type TallyManager struct {
 
 func NewTallyManager(staringPoint int) *TallyManager {
 	counts := make(map[int]int)
-	events := make(chan *models.CalculatedResult, 100)
+	events := make(chan *models.ChangeEvent, 100)
 	inputChan := make(chan *models.CalculatedResult, 100)
 
 	queue := &queue.Queue{}
@@ -57,6 +57,6 @@ func (t *TallyManager) tallyResult(calculatedResult *models.CalculatedResult) {
 
 	if t.Counts[calculatedResult.Prime] > t.Counts[t.mostCommonValue] {
 		t.mostCommonValue = calculatedResult.Prime
-		t.Events <- calculatedResult
+		t.Events <- &models.ChangeEvent{Prime: calculatedResult.Prime, Job: calculatedResult.Job}
 	}
 }
