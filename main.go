@@ -7,9 +7,13 @@ import (
 	"fmt"
 	"runtime"
 	"strconv"
+
+	"github.com/davecheney/profile"
 )
 
 func main() {
+	defer profile.Start(profile.CPUProfile).Stop()
+
 	flag.Parse()
 
 	numCPUS, err := strconv.Atoi(flag.Arg(0))
