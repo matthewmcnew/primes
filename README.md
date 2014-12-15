@@ -1,12 +1,16 @@
 ## Introduction
 
-
-
 ## Setup
 
- go get github.com/matthewmcnew/primes
+Make sure you have go installed and your $GOPATH is properly set. Then run:
+
+ go get -u github.com/matthewmcnew/primes
 
 ## Run
+
+go install github.com/matthewmcnew/primes
+
+This will install an executable named primes to $GOPATH/bin
 
 ## Run the tests
 
